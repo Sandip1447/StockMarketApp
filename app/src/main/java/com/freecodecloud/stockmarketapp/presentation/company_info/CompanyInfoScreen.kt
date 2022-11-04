@@ -1,6 +1,6 @@
 package com.freecodecloud.stockmarketapp.presentation.company_info
 
-import androidx.compose.foundation.background
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
@@ -10,20 +10,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.freecodecloud.stockmarketapp.presentation.company_info.components.StockChart
-import com.ramcosta.composedestinations.annotation.Destination
 
 @Composable
-@Destination
 fun CompanyInfoScreen(
-    symbol: String,
+    navController: NavController,
     viewModel: CompanyInfoViewModel = hiltViewModel()
 ) {
 
@@ -33,9 +31,10 @@ fun CompanyInfoScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.DarkGray)
                 .padding(16.dp)
         ) {
+
+            Log.d("debug", "CompanyInfoScreen: at ${viewModel.companySymbol} ")
             state.companyInfo?.let { company ->
 
                 Text(

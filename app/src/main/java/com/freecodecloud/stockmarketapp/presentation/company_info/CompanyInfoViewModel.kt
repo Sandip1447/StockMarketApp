@@ -19,52 +19,55 @@ class CompanyInfoViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+     val companySymbol: String = checkNotNull(savedStateHandle["symbol"])
+
     var state by mutableStateOf(CompanyInfoState())
 
     init {
 
         viewModelScope.launch {
-            val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
-            state = state.copy(isDataLoading = true)
-            val companyInfoResult = async { repository.getCompanyInfo(symbol) }
-            val intradayInfoResult = async { repository.getIntradayInfo(symbol) }
+            savedStateHandle.get<String>("symbol")?.let { symbol ->
+                state = state.copy(isDataLoading = true)
+                val companyInfoResult = async { repository.getCompanyInfo(symbol) }
+                val intradayInfoResult = async { repository.getIntradayInfo(symbol) }
 
-            when (val result = companyInfoResult.await()) {
-                is Resource.Error -> {
-                    state = state.copy(
-                        isDataLoading = false,
-                        companyInfo = null,
-                        message = result.message
-                    )
+                when (val result = companyInfoResult.await()) {
+                    is Resource.Error -> {
+                        state = state.copy(
+                            isDataLoading = false,
+                            companyInfo = null,
+                            message = result.message
+                        )
+                    }
+                    is Resource.Success -> {
+                        state = state.copy(
+                            isDataLoading = false,
+                            companyInfo = result.data,
+                            message = null
+                        )
+                    }
+                    else -> Unit
                 }
-                is Resource.Success -> {
-                    state = state.copy(
-                        isDataLoading = false,
-                        companyInfo = result.data,
-                        message = null
-                    )
+
+                when (val result = intradayInfoResult.await()) {
+                    is Resource.Error -> {
+                        state = state.copy(
+                            isDataLoading = false,
+                            stockInfos = emptyList(),
+                            message = result.message
+                        )
+                    }
+                    is Resource.Success -> {
+                        state = state.copy(
+                            isDataLoading = false,
+                            stockInfos = result.data ?: emptyList(),
+                            message = null
+                        )
+                    }
+                    else -> Unit
                 }
-                else -> Unit
+
             }
-
-            when (val result = intradayInfoResult.await()) {
-                is Resource.Error -> {
-                    state = state.copy(
-                        isDataLoading = false,
-                        stockInfos = emptyList(),
-                        message = result.message
-                    )
-                }
-                is Resource.Success -> {
-                    state = state.copy(
-                        isDataLoading = false,
-                        stockInfos = result.data ?: emptyList(),
-                        message = null
-                    )
-                }
-                else -> Unit
-            }
-
 
         }
     }

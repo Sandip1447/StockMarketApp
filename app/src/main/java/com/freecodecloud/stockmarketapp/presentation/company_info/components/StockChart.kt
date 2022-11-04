@@ -35,7 +35,7 @@ fun StockChart(
     val density = LocalDensity.current
     val textPaint = remember(density) {
         Paint().apply {
-            color = android.graphics.Color.WHITE
+            color = android.graphics.Color.GRAY
             textAlign = Paint.Align.CENTER
             textSize = density.run { 12.sp.toPx() }
         }
