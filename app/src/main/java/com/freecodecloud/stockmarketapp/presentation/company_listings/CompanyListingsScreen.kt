@@ -1,6 +1,8 @@
 package com.freecodecloud.stockmarketapp.presentation.company_listings
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,6 +24,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun CompanyListingsScreen(
+    context: Context,
     navController: NavController,
     viewModel: CompanyListingsViewModel = hiltViewModel()
 ) {
@@ -34,7 +39,16 @@ fun CompanyListingsScreen(
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { TopAppBar(title = { Text("Stocks") }) },
+        topBar = {
+            TopAppBar(title = { Text("Stocks") }, actions = {
+                IconButton(onClick = {
+                    Toast.makeText(context, "Feature not available", Toast.LENGTH_SHORT)
+                        .show()
+                }) {
+                    Icon(Icons.Filled.Sort, null)
+                }
+            })
+        },
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
 

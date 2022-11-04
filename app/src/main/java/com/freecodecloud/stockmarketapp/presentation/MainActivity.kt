@@ -39,7 +39,10 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screen.CompanyListing.route
                         ) {
-                            CompanyListingsScreen(navController = navController)
+                            CompanyListingsScreen(
+                                context = this@MainActivity,
+                                navController = navController
+                            )
                         }
 
                         // For Company info with screen route with passing argument symbol
