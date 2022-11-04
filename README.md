@@ -40,5 +40,6 @@ Claim your Free API Key
 | `symbol`  | `string` | **Required**. For fetch details   |
 
 ### Screenshot
-![Screenshot_20221008_185519](https://user-images.githubusercontent.com/16761010/194709852-e6b3d157-4b9c-4d2a-93ef-2f90cd117c26.png)
+![Screenshot_20221104_123443](https://user-images.githubusercontent.com/16761010/199915558-9aef188b-5a0b-4eea-b1c4-1d6155f8f0ae.png)
+![Screenshot_20221104_123507](https://user-images.githubusercontent.com/16761010/199915567-eae905fb-cbd7-4f04-960a-d281e63a5a3e.png)
 
